@@ -1,0 +1,95 @@
+.comment-list {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.comment-list > li:not(:last-child) .comment-card {
+  padding-block-end: 18px;
+  border-block-end: 2px solid var(--cultured);
+  margin-block-end: 18px;
+}
+
+.comment-card .card-text {
+  color: var(--spanish-gray);
+  font-size: 14px;
+  line-height: 1.3;
+  margin-block-start: 15px;
+}
+
+.aside-card {
+  padding: 15px;
+  height: 90vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.comment-card .profile-card {
+  color: var(--onyx);
+  font-size: 14px;
+}
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card::-webkit-scrollbar {
+  width: 9px;
+}
+
+.card::-webkit-scrollbar-track {
+  background: var(--white);
+  border-left: 1px solid var(--cultured);
+}
+
+.card::-webkit-scrollbar-thumb {
+  background: hsl(0, 0%, 80%);
+  border: 3px solid var(--white);
+  border-radius: 10px;
+}
+
+.usr-img {
+  font-size: 35px;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.right-text {
+  text-align: right;
+}
+
+@media (min-width: 768px) {
+  /* .aside-card { width: 800px; margin: 2vh auto; border: 2px solid var(--cultured); height: auto; min-height: 100vh;} */
+  .comment-list {
+    width: 45%;
+    /* transform: translateX(5%); */
+    height: fit-content;
+    margin-bottom: 100px;
+  }
+
+  .aside-card {
+    align-items: center;
+    height: 100vh;
+  }
+
+  .comment-card .card-text {
+    color: var(--oxford-blue);
+    font-size: 16px;
+    line-height: 1.7;
+    /* margin-block-start: 0; */
+  }
+
+  .comment-card .profile-card {
+    color: var(--onyx);
+    font-size: 18px;
+  }
+
+  .card::-webkit-scrollbar {
+  width: 12px;
+}
+}
