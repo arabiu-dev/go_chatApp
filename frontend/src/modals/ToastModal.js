@@ -5,6 +5,7 @@ import { closeOutline } from "ionicons/icons";
 
 export default function ToastNotification({ modalClosed, setModalClosed }) {
   const user = useSelector((state) => state.user);
+  console.log(user.notifyContact.photo);
 
   return (
     <div
@@ -30,7 +31,7 @@ export default function ToastNotification({ modalClosed, setModalClosed }) {
                   ? `https://res.cloudinary.com/dqzvvp77h/image/upload/ar_1.0,c_fill,w_250/r_max/f_auto/${user.notifyContact.photo}.jpg`
                   : ""
               }
-              alt="Rose Gold Earrings"
+              alt={user.notifyContact.username}
               width="80"
               height="70"
             />

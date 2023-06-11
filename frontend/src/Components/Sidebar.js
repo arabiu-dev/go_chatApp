@@ -6,27 +6,66 @@ import { userLogout } from "../redux/userSlice";
 import { IonIcon } from "@ionic/react";
 import { closeOutline, personAddOutline } from "ionicons/icons";
 
-export default function Sidebar({ setActive, active }) {
+// ContactItem component
+const ContactItem = ({ contact, onClick }) => (
+  <div className="showcase" onClick={onClick}>
+    <button className="showcase-img-box">
+      <img
+        src={`https://res.cloudinary.com/dqzvvp77h/image/upload/ar_1.0,c_fill,w_250/r_max/f_auto/${contact.photo}.jpg`}
+        alt={contact.username}
+        width="65"
+        height="65"
+        className="showcase-img"
+      />
+    </button>
+
+    <div className="showcase-content">
+      <button>
+        <h4 className="showcase-title">{contact.username}</h4>
+      </button>
+
+      <div className="date-box">
+        <p className="showcase-title">
+          {moment(contact.last_activity * 1000)
+            .local(true)
+            .format("MMM Do YYYY")}
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+const Sidebar = ({ setActive, active }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [newContact, setNewContact] = useState("");
+
   const handleNewContact = () => {
     if (!newContact.trim()) return;
 
     dispatch(addContact({ username: newContact }));
   };
 
+  const handleContactClick = (contact) => {
+    dispatch(fetchChatHistory([user.username, contact.username]));
+    setActive((state) => !state);
+  };
+
   return (
     <>
+      {/* Overlay */}
       <div
         className={`overlay ${active ? "active" : ""}`}
         data-overlay
         onClick={() => setActive((state) => !state)}
       ></div>
+
+      {/* Sidebar */}
       <div
         className={`sidebar  has-scrollbar ${active ? "active" : ""}`}
         data-mobile-menu
       >
+        {/* Contacts */}
         <div className="sidebar-category">
           <div className="sidebar-top">
             <h2 className="sidebar-title">Contacts</h2>
@@ -44,53 +83,22 @@ export default function Sidebar({ setActive, active }) {
             <div className="showcase-container">
               {user.contacts.length <= 0 ? (
                 <p className="showcase-title">
-                  {" "}
                   Your Contacts will appear here...
                 </p>
               ) : (
-                user.contacts.map((contact) => {
-                  return (
-                    <div
-                      className="showcase"
-                      key={contact.username}
-                      onClick={() => {
-                        dispatch(
-                          fetchChatHistory([user.username, contact.username])
-                        );
-                        setActive((state) => !state);
-                      }}
-                    >
-                      <button className="showcase-img-box">
-                        <img
-                          src={`https://res.cloudinary.com/dqzvvp77h/image/upload/ar_1.0,c_fill,w_250/r_max/f_auto/${contact.photo}.jpg`}
-                          alt={contact.username}
-                          width="65"
-                          height="65"
-                          className="showcase-img"
-                        />
-                      </button>
-
-                      <div className="showcase-content">
-                        <button>
-                          <h4 className="showcase-title">{contact.username}</h4>
-                        </button>
-
-                        <div className="date-box">
-                          <p className="showcase-title">
-                            {moment(contact.last_activity * 1000)
-                              .local(true)
-                              .format("MMM Do YYYY")}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
+                user.contacts.map((contact) => (
+                  <ContactItem
+                    key={contact.username}
+                    contact={contact}
+                    onClick={() => handleContactClick(contact)}
+                  />
+                ))
               )}
             </div>
           </div>
         </div>
 
+        {/* Add new contact */}
         <div className="product-showcase">
           <h3 className="showcase-heading">Add new contact</h3>
 
@@ -108,38 +116,36 @@ export default function Sidebar({ setActive, active }) {
               <IonIcon icon={personAddOutline} />
             </button>
           </div>
+        </div>
 
-          <div
-            className="product-showcase"
-            style={{
-              position: "absolute",
-              bottom: "30px",
-            }}
-          >
-            <h3 className="showcase-heading">Account</h3>
+        {/* Account */}
+        <div
+          className="product-showcase"
+          style={{ position: "absolute", bottom: "30px" }}
+        >
+          <h3 className="showcase-heading">Account</h3>
 
-            <div className="header-search-container">
-              <div className="showcase">
-                <img
-                  src={`https://res.cloudinary.com/dqzvvp77h/image/upload/ar_1.0,c_fill,w_250/r_max/f_auto/${user.photo}.jpg`}
-                  alt={user.username}
-                  width="65"
-                  height="65"
-                  className="showcase-img"
-                />
+          <div className="header-search-container">
+            <div className="showcase">
+              <img
+                src={`https://res.cloudinary.com/dqzvvp77h/image/upload/ar_1.0,c_fill,w_250/r_max/f_auto/${user.photo}.jpg`}
+                alt={user.username}
+                width="65"
+                height="65"
+                className="showcase-img"
+              />
 
-                <div className="showcase-content">
-                  <h4 className="showcase-title">{user.username}</h4>
+              <div className="showcase-content">
+                <h4 className="showcase-title">{user.username}</h4>
 
-                  <div className="date-box">
-                    <button
-                      className="showcase-title btn btn-secondary"
-                      style={{ padding: "2px 5px", color: "#fff" }}
-                      onClick={() => dispatch(userLogout())}
-                    >
-                      Sign out
-                    </button>
-                  </div>
+                <div className="date-box">
+                  <button
+                    className="showcase-title btn btn-secondary"
+                    style={{ padding: "2px 5px", color: "#fff" }}
+                    onClick={() => dispatch(userLogout())}
+                  >
+                    Sign out
+                  </button>
                 </div>
               </div>
             </div>
@@ -148,4 +154,6 @@ export default function Sidebar({ setActive, active }) {
       </div>
     </>
   );
-}
+};
+
+export default Sidebar;

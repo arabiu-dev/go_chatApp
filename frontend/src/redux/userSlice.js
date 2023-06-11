@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchChatHistory, fetchContacts, addContact } from "./chatThunks";
-const SIGNUP_URL = "http://localhost:8080/app/signup";
-const LOGIN_URL = "http://localhost:8080/app/signin";
+
+const SIGNUP_URL = "http://chat.devonnex.tech/app/signup";
+const LOGIN_URL = "http://chat.devonnex.tech/app/signin";
 const USER_SIGNED = "user_signup";
 const USER_LOGGED = "user_login";
 const USER_LOGGEDOUT = "user_loggedout";
@@ -73,21 +74,26 @@ const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    // Update chat history
     updateChatHistory: (state, action) => ({
       ...state,
       chatHistory: [action.payload, ...state.chatHistory],
     }),
+    // Set user login status
     setUserLogged: (state, action) => ({ ...state, isLogged: action.payload }),
+    // Set the contact to notify
     setNotifyContact: (state, action) => ({
       ...state,
       error: "",
       notifyContact: state.contacts.find((c) => c.username === action.payload),
     }),
+    // Set error message
     setError: (state, action) => ({
       ...state,
       requestLoading: false,
       error: action.payload,
     }),
+    // Persist user data
     persistUser: (state, action) => ({
       ...state,
       username: action.payload.username,

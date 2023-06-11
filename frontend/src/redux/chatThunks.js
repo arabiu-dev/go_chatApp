@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const URL = "http://localhost:8080/app";
+const URL = "http://chat.devonnex.tech/app";
 
+// Fetch contacts thunk
 export const fetchContacts = createAsyncThunk(
   "contacts/chitchat",
   async (user) => {
@@ -18,9 +19,10 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+// Add contact thunk
 export const addContact = createAsyncThunk(
   "addContact/chitchat",
-  async (contact, {rejectWithValue}) => {
+  async (contact, { rejectWithValue }) => {
     const res = await fetch(`${URL}/verify`, {
       method: "POST",
       headers: {
@@ -40,6 +42,7 @@ export const addContact = createAsyncThunk(
   }
 );
 
+// Fetch chat history thunk
 export const fetchChatHistory = createAsyncThunk(
   "history/chitchat",
   async (u) => {

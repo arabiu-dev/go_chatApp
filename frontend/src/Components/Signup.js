@@ -5,24 +5,30 @@ import bg from "../assets/images/hero-bg.png";
 
 const Signup = () => {
   const [type, setType] = useState("Sign In");
+
+  // Handle button click to toggle between Sign In and Sign Up
   const onClick = (e) => {
     setType(e.target.innerText);
   };
+
   return (
     <main className="has-bg-image" style={{ backgroundImage: `url(${bg})` }}>
       {
+        // Hero section with main content
         <section className="section hero" aria-labelledby="hero-label">
           <div className="container">
             <div className="hero-content">
               <h1 className="headline-lg" id="hero-label">
-                Use <span className="span">ChitChat</span> with your{" "}
-                <span className="span">Customers</span>
-                {", "} Friends & Family
+                Use <span className="span">ChitChat</span> to Connect with{" "}
+                <span className="span">Customers</span>,
+                <span className="span"> Friends</span>, and
+                <span className="span"> Family</span>
               </h1>
 
               <p className="title-md has-before">
-                Invite your Customers or Friends to Signup and add each other.
-                Also I'm your friend, You can add me by "Aminu" and say Hi.
+                Invite your customers or friends to sign up and connect with
+                each other. I'm also your friend! You can add me by searching
+                for "Aminu" and say Hi.
               </p>
 
               <div className="btn-group">

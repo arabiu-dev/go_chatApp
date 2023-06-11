@@ -15,7 +15,7 @@ export default function Controls({ setActive, setModalClosed }) {
   const cb = useRef(null);
 
   useEffect(() => {
-    socket.current = new WebSocket(`ws://localhost:8081/ws`);
+    socket.current = new WebSocket(`ws://chat.devonnex.tech/ws`);
   }, []);
 
   cb.current = (message) => {
